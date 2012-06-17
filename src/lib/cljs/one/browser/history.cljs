@@ -46,3 +46,7 @@
   [history token]
   (.setToken history (name token)))
 
+(defn get-token
+  "Retrieves the `history` URL fragment."
+  [history]
+  (.getToken history))

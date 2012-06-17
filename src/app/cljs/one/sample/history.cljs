@@ -17,7 +17,10 @@
 (def ^{:doc "The global history object for this application."}
   history (history/history nav-handler))
 
-(dispatch/react-to #{:init :form :greeting}
+; if given init, set the hash to the current hash (or :form failing that)
+(dispatch/react-to #{:init :form :greeting :about}
                    (fn [t _]
-                     (history/set-token history (if (#{:init} t) :form t))))
-
+                      (let [keyword (keyword (history/get-token history))]
+                        (history/set-token history (if (#{:init} t) 
+                                                      (if (clojure.string/blank?) :form keyword)
+                                                      t)))))
